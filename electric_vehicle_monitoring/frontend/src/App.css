@@ -1,0 +1,92 @@
+.App {
+  text-align: center;
+}
+
+.site-layout-background {
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.logo {
+  height: 32px;
+  margin: 16px;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 32px;
+}
+
+.header-title {
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.alert-card {
+  margin-bottom: 16px;
+}
+
+.alert-card.critical {
+  border-left: 5px solid #f5222d;
+}
+
+.alert-card.warning {
+  border-left: 5px solid #faad14;
+}
+
+.alert-card.info {
+  border-left: 5px solid #1890ff;
+}
+
+.camera-card {
+  margin-bottom: 16px;
+}
+
+.camera-stream {
+  width: 100%;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.sensor-card {
+  margin-bottom: 16px;
+}
+
+.sensor-value {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.sensor-value.normal {
+  color: #52c41a;
+}
+
+.sensor-value.warning {
+  color: #faad14;
+}
+
+.sensor-value.critical {
+  color: #f5222d;
+}
+
+.dashboard-card {
+  height: 100%;
+}
+
+.dashboard-stat {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.dashboard-label {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.chart-container {
+  height: 300px;
+  margin-top: 16px;
+} 

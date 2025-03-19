@@ -1,0 +1,26 @@
+# 核心框架
+Flask==2.3.3
+Flask-RESTful==0.3.10
+Flask-SQLAlchemy==3.1.1
+Flask-Cors==4.0.0
+
+# 数据库
+SQLAlchemy==2.0.21
+pymongo==4.5.0
+
+# AI视觉识别
+opencv-python==4.8.0.76
+numpy==1.24.3
+ultralytics==8.0.188  # YOLO实现
+
+# 传感器和硬件通信
+pyserial==3.5
+RPi.GPIO==0.7.1  # 用于树莓派GPIO控制
+
+# 工具库
+python-dotenv==1.0.0
+paho-mqtt==2.2.1  # MQTT通信协议
+requests==2.31.0
+
+# 测试工具
+pytest==7.4.0 
