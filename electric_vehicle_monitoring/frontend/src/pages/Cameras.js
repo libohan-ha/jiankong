@@ -1,8 +1,9 @@
-import { DeleteOutlined, EditOutlined, EyeOutlined, PlusOutlined, SettingOutlined } from '@ant-design/icons';
-import { Button, Card, Col, Empty, Form, Input, message, Modal, Row, Select, Spin, Switch } from 'antd';
+import { DeleteOutlined, EditOutlined, SettingOutlined } from '@ant-design/icons';
+import { Button, Card, Col, Empty, Form, Input, message, Modal, Row, Select, Spin, Switch, Tabs } from 'antd';
 import React, { useEffect, useState } from 'react';
 
 const { Option } = Select;
+const { TabPane } = Tabs;
 
 const Cameras = () => {
   const [loading, setLoading] = useState(true);
@@ -10,8 +11,6 @@ const Cameras = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalType, setModalType] = useState('add'); // 'add' or 'edit'
   const [currentCamera, setCurrentCamera] = useState(null);
-  const [previewVisible, setPreviewVisible] = useState(false);
-  const [previewCamera, setPreviewCamera] = useState(null);
   const [form] = Form.useForm();
 
   // 获取摄像头列表
@@ -26,39 +25,23 @@ const Cameras = () => {
       // const response = await axios.get('/api/cameras');
       // setCameras(response.data);
       
-      // 使用模拟数据
+      // 使用模拟数据 - 只保留两个摄像头
       setCameras([
         {
           id: 1,
-          name: '停车场入口',
-          url: 'http://example.com/camera1',
-          location: '地下停车场入口',
-          status: 'active',
-          detection_enabled: true
-        },
-        {
-          id: 2,
           name: '充电区域1',
-          url: 'http://example.com/camera2',
+          url: 'http://example.com/camera1',
           location: '地下停车场充电区',
           status: 'active',
           detection_enabled: true
         },
         {
-          id: 3,
+          id: 2,
           name: '充电区域2',
-          url: 'http://example.com/camera3',
+          url: 'http://example.com/camera2',
           location: '室外充电桩',
           status: 'active',
           detection_enabled: true
-        },
-        {
-          id: 4,
-          name: '监控点4',
-          url: 'http://example.com/camera4',
-          location: '电动车停放区',
-          status: 'inactive',
-          detection_enabled: false
         }
       ]);
       
@@ -107,12 +90,6 @@ const Cameras = () => {
     }
   };
 
-  // 预览摄像头
-  const handlePreviewCamera = (camera) => {
-    setPreviewCamera(camera);
-    setPreviewVisible(true);
-  };
-
   // 提交表单
   const handleSubmit = async (values) => {
     try {
@@ -153,7 +130,7 @@ const Cameras = () => {
       <div>
         <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'space-between' }}>
           <h2>摄像头监控</h2>
-          <Button type="primary" icon={<PlusOutlined />} onClick={handleAddCamera}>
+          <Button type="primary" onClick={handleAddCamera}>
             添加摄像头
           </Button>
         </div>
@@ -161,46 +138,58 @@ const Cameras = () => {
         {cameras.length === 0 ? (
           <Empty description="暂无摄像头" />
         ) : (
-          <Row gutter={[16, 16]}>
-            {cameras.map(camera => (
-              <Col key={camera.id} xs={24} sm={12} md={8} lg={6}>
-                <Card
-                  title={camera.name}
-                  extra={
-                    <div>
-                      <Button 
-                        type="text" 
-                        icon={<EyeOutlined />} 
-                        onClick={() => handlePreviewCamera(camera)}
-                      />
-                      <Button 
-                        type="text" 
-                        icon={<EditOutlined />} 
-                        onClick={() => handleEditCamera(camera)}
-                      />
-                      <Button 
-                        type="text" 
-                        danger 
-                        icon={<DeleteOutlined />} 
-                        onClick={() => handleDeleteCamera(camera.id)}
-                      />
+          <div>
+            {/* 直接显示两个监控画面 */}
+            <Row gutter={[16, 16]}>
+              {cameras.map(camera => (
+                <Col key={camera.id} span={12}>
+                  <Card
+                    title={camera.name}
+                    extra={
+                      <div>
+                        <Button 
+                          type="text" 
+                          icon={<EditOutlined />} 
+                          onClick={() => handleEditCamera(camera)}
+                        />
+                        <Button 
+                          type="text" 
+                          danger 
+                          icon={<DeleteOutlined />} 
+                          onClick={() => handleDeleteCamera(camera.id)}
+                        />
+                      </div>
+                    }
+                    className="camera-card"
+                  >
+                    {/* 直接显示摄像头视频流 */}
+                    <div className="camera-stream" style={{ height: 320, background: '#000', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 16 }}>
+                      {/* 实际项目中应该替换为真实的视频流 */}
+                      <Empty description="监控视频流" image={Empty.PRESENTED_IMAGE_SIMPLE} />
                     </div>
-                  }
-                  className="camera-card"
-                >
-                  <div style={{ marginBottom: 8 }}>
-                    <strong>位置:</strong> {camera.location}
-                  </div>
-                  <div style={{ marginBottom: 8 }}>
-                    <strong>状态:</strong> {camera.status === 'active' ? '在线' : '离线'}
-                  </div>
-                  <div>
-                    <strong>检测:</strong> {camera.detection_enabled ? '已启用' : '已禁用'}
-                  </div>
-                </Card>
-              </Col>
-            ))}
-          </Row>
+                    
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <div>
+                        <p><strong>位置:</strong> {camera.location}</p>
+                        <p><strong>状态:</strong> {camera.status === 'active' ? '在线' : '离线'}</p>
+                      </div>
+                      <div>
+                        <p><strong>检测:</strong> {camera.detection_enabled ? '已启用' : '已禁用'}</p>
+                        <Button 
+                          type="primary" 
+                          icon={<SettingOutlined />}
+                          size="small"
+                          onClick={() => handleEditCamera(camera)}
+                        >
+                          设置
+                        </Button>
+                      </div>
+                    </div>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+          </div>
         )}
 
         {/* 添加/编辑摄像头模态框 */}
@@ -267,45 +256,6 @@ const Cameras = () => {
               </Button>
             </Form.Item>
           </Form>
-        </Modal>
-
-        {/* 预览摄像头模态框 */}
-        <Modal
-          title={previewCamera?.name}
-          open={previewVisible}
-          onCancel={() => setPreviewVisible(false)}
-          footer={[
-            <Button key="back" onClick={() => setPreviewVisible(false)}>
-              关闭
-            </Button>,
-            <Button 
-              key="settings" 
-              type="primary" 
-              icon={<SettingOutlined />}
-              onClick={() => {
-                setPreviewVisible(false);
-                handleEditCamera(previewCamera);
-              }}
-            >
-              设置
-            </Button>
-          ]}
-          width={800}
-        >
-          {previewCamera && (
-            <div>
-              <div className="camera-stream" style={{ height: 400, background: '#000', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                {/* 实际项目中应该显示摄像头视频流 */}
-                <Empty description="摄像头视频流" image={Empty.PRESENTED_IMAGE_SIMPLE} />
-              </div>
-              <div style={{ marginTop: 16 }}>
-                <p><strong>位置:</strong> {previewCamera.location}</p>
-                <p><strong>URL:</strong> {previewCamera.url}</p>
-                <p><strong>状态:</strong> {previewCamera.status === 'active' ? '在线' : '离线'}</p>
-                <p><strong>检测:</strong> {previewCamera.detection_enabled ? '已启用' : '已禁用'}</p>
-              </div>
-            </div>
-          )}
         </Modal>
       </div>
     </Spin>

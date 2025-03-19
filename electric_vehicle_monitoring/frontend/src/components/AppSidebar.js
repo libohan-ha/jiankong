@@ -18,14 +18,14 @@ const AppSidebar = () => {
   // 菜单项
   const menuItems = [
     {
-      key: '/',
-      icon: <DashboardOutlined />,
-      label: <Link to="/">仪表盘</Link>,
-    },
-    {
       key: '/cameras',
       icon: <VideoCameraOutlined />,
       label: <Link to="/cameras">摄像头监控</Link>,
+    },
+    {
+      key: '/',
+      icon: <DashboardOutlined />,
+      label: <Link to="/">仪表盘</Link>,
     },
     {
       key: '/sensors',

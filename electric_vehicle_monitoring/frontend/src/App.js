@@ -25,8 +25,8 @@ function App() {
             <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
               <Routes>
                 <Route path="/" element={<Dashboard />} />
-                <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/cameras" element={<Cameras />} />
+                <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/sensors" element={<Sensors />} />
                 <Route path="/alerts" element={<Alerts />} />
                 <Route path="/settings" element={<Settings />} />
